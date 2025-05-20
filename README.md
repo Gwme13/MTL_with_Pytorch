@@ -153,17 +153,16 @@ The **flattened output** size of this feature extractor is `4096` ($256 \times 4
 * **Architecture**:
     * Two separate AlexNet-like pathways, one for each task. Each pathway is divided into three blocks similar to the base architecture.
     * **CrossStitchUnit**: This module connects the two pathways. It takes feature maps from corresponding layers of the two task pathways and learns a linear combination:
-        * ```math
-          \tilde{x}_A^l = \alpha_{AA} \cdot x_A^l + \alpha_{AB} \cdot x_B^l
-          ```
-        * ```math
-          \tilde{x}_B^l = \alpha_{BA} \cdot x_A^l + \alpha_{BB} \cdot x_B^l
-          ```
-        * The $\alpha$ values form a learnable $2 \times 2$ "stitch matrix", are initialized as `[[0.9, 0.1], [0.1, 0.9]]` to encourage initial self-reliance with some learned sharing.
-    * Cross-stitch units are applied after Block 1 and Block 2 of each pathway.
-    * The outputs from Block 3 of each pathway are flattened and fed into task-specific classifiers (similar to the HardShare model's classifier base and heads, but separate for each task).
-* **Total Parameters**: 15,004,307 (~15M).
-    * This is nearly double the HardShare model due to the additional parameters from the cross-stitch units and separate pathways.
+    <img src="images/Cross-Stitch-matrix.png" alt="CrossStitchUnit" width="250">
+    
+    The $\alpha$ values form a learnable $2 \times 2$ "stitch matrix", initialized as `[[0.9, 0.1], [0.1, 0.9]]` to encourage initial self-reliance with some learned sharing.
+
+Cross-stitch units are applied after Block 1 and Block 2 of each pathway.
+
+The outputs from Block 3 of each pathway are flattened and fed into task-specific classifiers (similar to the HardShare model's classifier base and heads, but separate for each task).
+
+**Total Parameters**: 15,004,307 (~15M).\
+This is nearly double the HardShare model due to the additional parameters from the cross-stitch units and separate pathways.
 
 ### Single-Task Learning (`AlexNetSTL`)
 * **Architecture**:
