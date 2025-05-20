@@ -134,7 +134,7 @@ The adapted convolutional base, used as a feature extractor in Hard Sharing and 
 4.  Conv4: `nn.Conv2d(384, 256, kernel_size=3, padding=1)`, ReLU
 5.  Conv5: `nn.Conv2d(256, 256, kernel_size=3, padding=1)`, ReLU, `MaxPool2d(kernel_size=2, stride=2)` -> Output: 256x4x4
 
-The **flattened output** size of this feature extractor is **256x4x4 = 4096**.
+The **flattened output** size of this feature extractor is `4096` ($256 \times 4 \times 4$). This output is then passed to the classifier base and task-specific heads.
 
 ### Hard Parameter Sharing MTL (`AlexNetMTL_HardShare`)
 * **Architecture**:
@@ -147,7 +147,7 @@ The **flattened output** size of this feature extractor is **256x4x4 = 4096**.
     * This shared representation (1024 features) is then fed into two task-specific heads:
         * Task 1 Head: `Linear(1024, num_classes_task1)` (10 output classes for CIFAR-10)
         * Task 2 Head: `Linear(1024, num_outputs_task2)` (1 output for binary animal/non-animal, using sigmoid later)
-* **Total Parameters**: 7,507,787 (~
+* **Total Parameters**: 7,507,787 (~7.5M).
 
 ### Soft Parameter Sharing MTL (Cross-Stitch Networks - `CrossStitchAlexNetMTL`)
 * **Architecture**:
@@ -216,21 +216,21 @@ These plots help in analyzing training dynamics, convergence, and potential over
 
 | Model                   | Task 1 Accuracy (10-Class) | Task 2 Accuracy (Animal/Non-Animal) |
 | :---------------------- | :------------------------- | :---------------------------------- |
-| AlexNet HardShareMTL    | 79.16%                     | **96.63%** |
-| AlexNet CrossStitchMTL  | 79.56%                     | 95.93%                              |
-| AlexNet STL (Task 1)    | **80.41%** | N/A                                 |
-| AlexNet STL (Task 2)    | N/A                        | 96.10%                              |
+| AlexNet HardShareMTL    | 79.22%                     | **96.71%** |
+| AlexNet CrossStitchMTL  | 79.85%                     | 95.56%                              |
+| AlexNet STL (Task 1)    | **80.56%** | N/A                                 |
+| AlexNet STL (Task 2)    | N/A                        | 95.76%                              |
 
 ### Interpretation of Results
 
 * **Task 1 (10-Class CIFAR-10 Classification)**:
-    * The **STL model dedicated to Task 1 achieved the highest accuracy (80.41%)**. This is often expected, as a model focused solely on one task can optimize its parameters specifically for it.
-    * **CrossStitchMTL (79.56%)** performed slightly better than **HardShareMTL (79.16%)** on this primary task. This suggests that the more flexible parameter sharing of Cross-Stitch networks might have been marginally beneficial for the more complex 10-class task.
-    * Both MTL approaches were competitive but did not surpass the specialized STL model for Task 1.
+    * The **STL model dedicated to Task 1 achieved the highest accuracy (80.56%)**. This is often expected, as a model focused solely on one task can optimize its parameters specifically for it.
+    * **CrossStitchMTL (79.85%)** performed slightly better than **HardShareMTL (79.22%)** on this primary task. This suggests that the more flexible parameter sharing of Cross-Stitch networks might have been marginally beneficial for the more complex 10-class task.
+    * Both MTL approaches were competitive and can be considered effective. The performance gap between MTL and STL models is relatively small, indicating that MTL can be a viable alternative to STL for related tasks.
 
 * **Task 2 (Binary Animal/Non-Animal Classification)**:
-    * **HardShareMTL achieved the highest accuracy (96.63%)** for this auxiliary task, outperforming even the dedicated STL model for Task 2 (96.10%). This is a key finding, indicating that the shared representations learned by the HardShareMTL model were highly beneficial for this simpler, related binary task. The main task (Task 1) might have acted as a regularizer or helped the model learn features that are also discriminative for the animal/non-animal distinction.
-    * **CrossStitchMTL (95.93%)** performed slightly lower than the other two on this task, though still achieving high accuracy.
+    * **HardShareMTL achieved the highest accuracy (96.71%)** for this auxiliary task, outperforming even the dedicated STL model for Task 2 (95.76%). This is a key finding, indicating that the shared representations learned by the HardShareMTL model were highly beneficial for this simpler, related binary task. The main task (Task 1) might have acted as a regularizer or helped the model learn features that are also discriminative for the animal/non-animal distinction.
+    * **CrossStitchMTL (95.56%)** performed slightly lower than the other two on this task, though still achieving high accuracy.
 
 * **Overall Comparison**:
     * **STL models** provide strong baselines and achieved the best individual performance on Task 1.
@@ -244,7 +244,7 @@ Confusion matrices are generated for each model on the test set for both tasks:
 * **Task 1 (10-Class)**: These matrices show the per-class true positives, false positives, true negatives, and false negatives, revealing which classes are often confused with each other (e.g., "cat" vs. "dog").
 * **Task 2 (Binary)**: These $2 \times 2$ matrices show the performance in distinguishing "Animal" vs. "Non-Animal" classes.
 
-A detailed look at these matrices (visualized in the notebook) would provide insights into specific error patterns for each model and task, complementing the overall accuracy scores. For instance, one might observe if MTL helps in disambiguating specific confusing classes in Task 1 better than STL.
+A detailed look at these matrices would provide insights into specific error patterns for each model and task, complementing the overall accuracy scores. For instance, one might observe if MTL helps in disambiguating specific confusing classes in Task 1 better than STL.
 
 ## Conclusion
 This notebook provides a thorough implementation and comparative analysis of Single-Task Learning, Hard Parameter Sharing MTL, and Soft Parameter Sharing (Cross-Stitch) MTL for image classification on CIFAR-10.
