@@ -12,7 +12,7 @@ Throughout both notebooks, the following learning paradigms are implemented and 
 
 ## Overview of the Notebooks
 
-### 1. `MTL_digits.ipynb` - Classification on a Modified MNIST Dataset
+### 1. `MTL_MNIST.ipynb` - Classification on a Modified MNIST Dataset
 
 This notebook focuses on applying and comparing STL and MTL (Hard Parameter Sharing and Cross-Stitch) techniques using a dataset derived from MNIST.
 
@@ -59,7 +59,7 @@ Both notebooks adhere to a similar organizational structure:
 ## How to Use
 
 1.  Ensure you have a Python environment with the required libraries installed (primarily `torch`, `torchvision`, `numpy`, `matplotlib`).
-2.  Open and run the cells within the Jupyter notebooks (`MTL_digits.ipynb` or `MTL_CIFAR10.ipynb`) in a suitable Jupyter environment.
+2.  Open and run the cells within the Jupyter notebooks (`MTL_MNIST.ipynb` or `MTL_CIFAR10.ipynb`) in a suitable Jupyter environment.
 3.  Users are encouraged to modify configuration parameters (e.g., number of epochs, learning rates) to conduct further experiments.
 
 ## Overall Project Conclusions
