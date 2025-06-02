@@ -8,7 +8,7 @@ Throughout both notebooks, the following learning paradigms are implemented and 
 
 1.  **Single-Task Learning (STL):** This traditional approach involves training separate, independent models for each specific task. STL serves as a baseline for performance comparison.
 2.  **Multi-Task Learning (MTL) - Hard Parameter Sharing:** In this common MTL technique, initial layers (or a shared "backbone") of a neural network are utilized by all tasks, while the final layers are task-specific. This method promotes shared feature extraction.
-3.  **Multi-Task Learning (MTL) - Soft Parameter Sharing (Cross-Stitch Networks):** This more flexible approach allows task-specific models to be trained somewhat independently but enables them to learn how to share and combine their feature maps at various network levels. This is achieved through "cross-stitch" units, which learn linear combinations of activations from different tasks.
+3.  **Multi-Task Learning (MTL) - Soft Parameter Sharing (Cross-Stitch Networks):** This more flexible approach allows task-specific models to be trained somewhat independently but enables them to learn how to share and combine their feature maps at various network levels. This is achieved through cross-stitch units, which learn linear combinations of activations from different tasks.
 
 ## Overview of the Notebooks
 
@@ -25,7 +25,7 @@ This notebook focuses on applying and comparing STL and MTL (Hard Parameter Shar
 * **Objectives:**
     * To introduce the fundamental concepts of Multi-Task Learning.
     * To compare the performance of STL, Hard Parameter Sharing MTL, and Cross-Stitch MTL on correlated tasks.
-    * To observe how Cross-Stitch units learn to mediate information flow between tasks.
+    * To observe how cross-stitch units learn to share fetaures between tasks.
 
 ### 2. `MTL_CIFAR10.ipynb` - Classification on CIFAR-10 with Uncorrelated Tasks
 
@@ -51,7 +51,7 @@ Both notebooks adhere to a similar organizational structure:
 3.  **Model Architecture Definition:** Implementing PyTorch classes for:
     * STL models (one per task).
     * MTL model with Hard Parameter Sharing.
-    * MTL model with Cross-Stitch Networks (including the Cross-Stitch unit implementation).
+    * MTL model with Cross-Stitch Networks (including the Cross-Stitch Unit implementation).
 4.  **Utility, Training, and Evaluation Functions:** Defining generic training loops (`train_epoch`) and evaluation loops (`evaluate_epoch`), functions for loss calculation (typically CrossEntropyLoss), and accuracy metrics.
 5.  **Experiment Execution:** Training and evaluating each learning approach on the defined tasks.
 6.  **Results Visualization and Discussion:** Presenting performance metrics (loss and accuracy) through plots and tables, followed by a qualitative discussion of the observed outcomes.
