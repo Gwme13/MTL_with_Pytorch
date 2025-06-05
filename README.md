@@ -1,3 +1,4 @@
+![Python Version](https://img.shields.io/badge/python-3.10+-blue.svg)
 # Investigating Multi-Task Learning (MTL) Paradigms with PyTorch
 
 This repository presents two Jupyter notebooks designed to explore and compare various Multi-Task Learning (MTL) strategies against the conventional Single-Task Learning (STL) approach. The primary goal is to demonstrate how MTL can be employed to train models on multiple tasks simultaneously.
